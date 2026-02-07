@@ -1,4 +1,12 @@
+import { useState } from "react";
+
 const Header = () => {
+    const [logout , useLogout] = useState("logout");
+
+    const handlelogin = ()=>{
+        useLogout("login");
+    } 
+
     return (
         <div className="header">
             <div className="logo">
@@ -10,10 +18,13 @@ const Header = () => {
                         home
                     </li>
                     <li>
-                        about us
+                        about uskkk
                     </li>
                     <li>
                         cart
+                    </li>
+                    <li onClick={handlelogin}>
+                        {logout == "logout" ? "logout" : "login"}
                     </li>
                 </ul>
             </div>

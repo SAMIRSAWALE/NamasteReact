@@ -1,9 +1,14 @@
-/* ===== GLOBAL ===== */
+/* ===== GLOBAL RESET ===== */
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: Inter, Arial, Helvetica, sans-serif;
+}
+
+body {
+  background-color: #f8f8f8;
+  color: #222;
 }
 
 /* ===== HEADER ===== */
@@ -11,79 +16,205 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px 24px;
-  border-bottom: 1px solid #ddd;
-  background-color: #fff;
+  padding: 14px 32px;
+  border-bottom: 1px solid #eee;
+  background-color: #ffffff;
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
 
 .image-logo {
-  height: 60px;
-  width: 60px;
+  height: 56px;
+  width: 56px;
   object-fit: cover;
-  border-radius: 8px;
+  border-radius: 10px;
 }
 
 .links {
   display: flex;
-  gap: 20px;
+  gap: 28px;
 }
 
 .links li {
   list-style: none;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 15px;
+  font-weight: 500;
   color: #333;
+  transition: color 0.2s ease;
 }
 
 .links li:hover {
   color: #fc8019;
 }
 
-/* ===== SEARCH ===== */
-.search {
-  padding: 16px 24px;
-  font-size: 18px;
-  font-weight: bold;
+/* ===== BODY ===== */
+.body {
+  max-width: 1200px;
+  margin: auto;
+}
+
+/* ===== FILTER BAR ===== */
+.filter {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px 24px;
+}
+
+.btn-filter {
+  padding: 10px 16px;
+  background-color: #fc8019;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.btn-filter:hover {
+  background-color: #e96f12;
+  transform: translateY(-1px);
+}
+
+.filter label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #444;
+}
+
+.filter select {
+  padding: 9px 12px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  font-size: 14px;
+  background-color: #fff;
+  cursor: pointer;
 }
 
 /* ===== RESTAURANT CONTAINER ===== */
 .restro-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 24px;
   padding: 24px;
 }
 
 /* ===== RESTAURANT CARD ===== */
 .restro-card {
-  width: 250px;
-  border: 1px solid #e5e5e5;
-  border-radius: 10px;
-  padding: 12px;
   background-color: #fff;
+  border-radius: 14px;
+  overflow: hidden;
   cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .restro-card:hover {
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transform: scale(1.03);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
 }
 
 /* ===== CARD IMAGE ===== */
 .res-card-image {
   width: 100%;
-  height: 150px;
+  height: 160px;
   object-fit: cover;
-  border-radius: 8px;
 }
 
-/* ===== CARD TEXT ===== */
+/* ===== CARD CONTENT ===== */
 .restro-card h2 {
   font-size: 16px;
-  margin-top: 10px;
+  font-weight: 600;
+  margin: 12px 12px 4px;
 }
 
 .restro-card h5 {
   font-size: 14px;
   color: #666;
-  margin-top: 4px;
+  margin: 0 12px 10px;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .filter {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+/* ===== SHIMMER CONTAINER ===== */
+.shimmer-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 20px;
+  justify-content: space-between;
+}
+
+/* ===== SHIMMER CARD ===== */
+.shimmer-card {
+  width: 220px;
+  height: 320px;
+  padding: 12px;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+}
+
+/* ===== SHIMMER BASE ===== */
+.shimmer {
+  position: relative;
+  background: #e0e0e0;
+  overflow: hidden;
+}
+
+.shimmer::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -150%;
+  width: 150%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.6),
+    transparent
+  );
+  animation: shimmer 1.3s infinite;
+}
+
+/* ===== CARD PARTS ===== */
+.shimmer-image {
+  height: 140px;
+  border-radius: 10px;
+  margin-bottom: 12px;
+}
+
+.shimmer-title {
+  height: 16px;
+  width: 80%;
+  border-radius: 6px;
+  margin-bottom: 10px;
+}
+
+.shimmer-text {
+  height: 12px;
+  width: 100%;
+  border-radius: 6px;
+  margin-bottom: 8px;
+}
+
+.shimmer-text.short {
+  width: 60%;
+}
+
+/* ===== ANIMATION ===== */
+@keyframes shimmer {
+  100% {
+    left: 100%;
+  }
 }
