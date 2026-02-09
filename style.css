@@ -1,85 +1,98 @@
-/* ===== GLOBAL RESET ===== */
+/* =====================
+   GLOBAL RESET
+===================== */
 * {
   box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  font-family: Inter, Arial, Helvetica, sans-serif;
 }
 
 body {
-  background-color: #f8f8f8;
-  color: #222;
+  margin: 0;
+  padding: 0;
 }
 
-/* ===== HEADER ===== */
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 14px 32px;
-  border-bottom: 1px solid #eee;
-  background-color: #ffffff;
-  position: sticky;
-  top: 0;
-  z-index: 100;
-}
+/* ===== NAV FIX ===== */
 
-.image-logo {
-  height: 56px;
-  width: 56px;
-  object-fit: cover;
-  border-radius: 10px;
-}
+.header { display: flex; justify-content: space-between; align-items: center; padding: 14px 32px; border-bottom: 1px solid #eee; background-color: #ffffff; position: sticky; top: 0; z-index: 100; } 
+.image-logo { height: 56px; width: 56px; object-fit: cover; border-radius: 10px; } 
+.links { display: flex; gap: 28px; } 
+.links li { list-style: none; cursor: pointer; font-size: 15px; font-weight: 500; color: #333; transition: color 0.2s ease; } 
+.links li:hover { color: #fc8019; }
 
-.links {
-  display: flex;
-  gap: 28px;
-}
-
-.links li {
-  list-style: none;
-  cursor: pointer;
-  font-size: 15px;
-  font-weight: 500;
-  color: #333;
-  transition: color 0.2s ease;
-}
-
-.links li:hover {
-  color: #fc8019;
-}
-
-/* ===== BODY ===== */
+/* =====================
+   BODY WRAPPER
+===================== */
 .body {
   max-width: 1200px;
-  margin: auto;
+  margin: 0 auto;
+  padding: 16px;
 }
 
-/* ===== FILTER BAR ===== */
+/* =====================
+   FILTER BAR
+===================== */
 .filter {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: 16px;
-  padding: 20px 24px;
+  gap: 14px;
+  padding: 16px;
+  background-color: #ffffff;
+  border-radius: 14px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+  margin-bottom: 24px;
 }
 
-.btn-filter {
-  padding: 10px 16px;
-  background-color: #fc8019;
-  color: #fff;
+.search-box {
+  flex: 1;
+  min-width: 220px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.search-box:focus {
+  border-color: #fc8019;
+  box-shadow: 0 0 0 2px rgba(252, 128, 25, 0.15);
+}
+
+.search-btn,
+.reset-btn {
+  padding: 12px 18px;
+  border-radius: 10px;
   border: none;
-  border-radius: 8px;
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
-  transition: background-color 0.2s ease, transform 0.1s ease;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.2s ease;
 }
 
-.btn-filter:hover {
+.search-btn {
+  background-color: #fc8019;
+  color: #fff;
+}
+
+.search-btn:hover {
   background-color: #e96f12;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 14px rgba(252, 128, 25, 0.3);
+}
+
+.reset-btn {
+  background-color: #f1f1f1;
+  color: #333;
+}
+
+.reset-btn:hover {
+  background-color: #e4e4e4;
   transform: translateY(-1px);
 }
 
+/* =====================
+   RATING SELECT
+===================== */
 .filter label {
   font-size: 14px;
   font-weight: 500;
@@ -87,124 +100,136 @@ body {
 }
 
 .filter select {
-  padding: 9px 12px;
-  border-radius: 8px;
+  padding: 11px 14px;
+  border-radius: 10px;
   border: 1px solid #ddd;
   font-size: 14px;
-  background-color: #fff;
   cursor: pointer;
+  background-color: #fff;
+  transition: border-color 0.2s ease;
 }
 
-/* ===== RESTAURANT CONTAINER ===== */
+.filter select:focus {
+  border-color: #fc8019;
+  outline: none;
+}
+
+/* =====================
+   NO DATA MESSAGE
+===================== */
+.body h1 {
+  text-align: center;
+  font-size: 22px;
+  font-weight: 600;
+  color: #555;
+  margin-top: 40px;
+}
+
+/* =====================
+   RESTAURANT GRID
+===================== */
 .restro-container {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: 24px;
-  padding: 24px;
+  gap: 22px;
 }
 
-/* ===== RESTAURANT CARD ===== */
+/* =====================
+   RESTAURANT CARD
+===================== */
 .restro-card {
-  background-color: #fff;
-  border-radius: 14px;
+  background-color: #ffffff;
+  border-radius: 16px;
   overflow: hidden;
   cursor: pointer;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .restro-card:hover {
-  transform: scale(1.03);
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
+  transform: translateY(-4px);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.12);
 }
 
-/* ===== CARD IMAGE ===== */
+/* =====================
+   CARD IMAGE
+===================== */
 .res-card-image {
   width: 100%;
   height: 160px;
   object-fit: cover;
 }
 
-/* ===== CARD CONTENT ===== */
+/* =====================
+   CARD CONTENT
+===================== */
 .restro-card h2 {
   font-size: 16px;
   font-weight: 600;
-  margin: 12px 12px 4px;
+  margin: 12px 14px 6px;
+  color: #222;
 }
 
 .restro-card h5 {
   font-size: 14px;
   color: #666;
-  margin: 0 12px 10px;
+  margin: 0 14px 14px;
 }
 
-/* ===== RESPONSIVE ===== */
-@media (max-width: 768px) {
-  .filter {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-}
-/* ===== SHIMMER CONTAINER ===== */
+/* =====================
+   SHIMMER UI
+===================== */
 .shimmer-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  padding: 20px;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 22px;
+  padding: 16px;
 }
 
-/* ===== SHIMMER CARD ===== */
 .shimmer-card {
-  width: 220px;
   height: 320px;
   padding: 12px;
-  border-radius: 12px;
-  background: #fff;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-  overflow: hidden;
+  border-radius: 16px;
+  background-color: #ffffff;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
 }
 
-/* ===== SHIMMER BASE ===== */
 .shimmer {
   position: relative;
-  background: #e0e0e0;
+  background-color: #e6e6e6;
   overflow: hidden;
 }
 
 .shimmer::after {
   content: "";
   position: absolute;
-  top: 0;
-  left: -150%;
-  width: 150%;
-  height: 100%;
+  inset: 0;
+  transform: translateX(-100%);
   background: linear-gradient(
     90deg,
     transparent,
     rgba(255, 255, 255, 0.6),
     transparent
   );
-  animation: shimmer 1.3s infinite;
+  animation: shimmer 1.2s infinite;
 }
 
-/* ===== CARD PARTS ===== */
 .shimmer-image {
   height: 140px;
-  border-radius: 10px;
-  margin-bottom: 12px;
+  border-radius: 12px;
+  margin-bottom: 14px;
 }
 
 .shimmer-title {
   height: 16px;
-  width: 80%;
-  border-radius: 6px;
+  width: 75%;
+  border-radius: 8px;
   margin-bottom: 10px;
 }
 
 .shimmer-text {
   height: 12px;
   width: 100%;
-  border-radius: 6px;
+  border-radius: 8px;
   margin-bottom: 8px;
 }
 
@@ -212,9 +237,164 @@ body {
   width: 60%;
 }
 
-/* ===== ANIMATION ===== */
+/* =====================
+   SHIMMER ANIMATION
+===================== */
 @keyframes shimmer {
   100% {
-    left: 100%;
+    transform: translateX(100%);
+  }
+}
+
+/* =====================
+   RESPONSIVE
+===================== */
+@media (max-width: 768px) {
+  .filter {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .search-btn,
+  .reset-btn {
+    width: 100%;
+  }
+}
+
+.pagination-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  margin: 24px 0;
+  padding: 0;
+}
+
+.li-pagination {
+  list-style: none;
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
+.pagination-buttons {
+  min-width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  background-color: #fc8019;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.15s ease;
+}
+
+.pagination-buttons:hover {
+  background-color: #e96f12;
+  transform: translateY(-1px);
+}
+
+.pagination-buttons:active {
+  transform: translateY(0);
+}
+
+.restro-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', sans-serif;
+}
+
+.restro-info {
+  background: white;
+  padding: 24px;
+  border-radius: 16px;
+  margin-bottom: 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.restro-name {
+  font-size: 32px;
+  font-weight: 700;
+  margin: 0 0 8px 0;
+  color: #1c1c1c;
+}
+
+.address {
+  font-size: 14px;
+  color: #686b78;
+  margin: 4px 0;
+}
+
+.estimated-time {
+  font-size: 14px;
+  color: #686b78;
+  margin: 4px 0;
+  font-weight: 500;
+}
+
+.restro-menu-list {
+  background: white;
+  padding: 24px;
+  border-radius: 16px;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.restro-menu-list > h1 {
+  font-size: 24px;
+  font-weight: 700;
+  margin: 0 0 20px 0;
+  color: #1c1c1c;
+  border-bottom: 2px solid #f0f0f0;
+  padding-bottom: 12px;
+}
+
+.restro-menu-list > div > div {
+  margin-bottom: 24px;
+}
+
+.restro-menu-list h5 {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0 0 8px 0;
+  color: #3e4152;
+}
+
+.restro-menu-list p {
+  font-size: 14px;
+  color: #686b78;
+  line-height: 1.5;
+  margin: 0 0 16px 0;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.restro-menu-list > div > div:last-child p {
+  border-bottom: none;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .restro-container {
+    padding: 12px;
+  }
+
+  .restro-info {
+    padding: 16px;
+  }
+
+  .restro-name {
+    font-size: 24px;
+  }
+
+  .restro-menu-list {
+    padding: 16px;
+  }
+
+  .restro-menu-list > h1 {
+    font-size: 20px;
   }
 }
