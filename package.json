@@ -19,7 +19,10 @@
   "homepage": "https://github.com/SAMIRSAWALE/NamasteReact#readme",
   "devDependencies": {
     "@vitejs/plugin-react": "^5.1.3",
+    "autoprefixer": "^10.4.24",
     "parcel": "^2.16.3",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^3.4.19",
     "vite": "^7.3.1"
   },
   "dependencies": {

@@ -2,46 +2,67 @@ import { useEffect, useState } from "react";
 import { resdata } from "../data/resData";
 import RestroCard from "./restroCards";
 import ShimmerUi from "./shimmer";
+import { Link } from "react-router-dom";
+import useOnlineStatus from "../utils/useOnlineStatus";
 
 const Body = () => {
 
     //pagination
-    const PAGE_SIZE = 16;
+    const PAGE_SIZE = 3;
+    const status = useOnlineStatus();
     const [data, setData] = useState([])
     const [preserveData, setpreserveData] = useState([]);
     const [flag, setFlag] = useState(false);
     const [searchText, setSearchText] = useState("");
     const [currentPage, setCurrentPage] = useState(0);
 
+
+    if (!status) {
+        return (
+            <h1>Connect to internet Please</h1>
+        )
+    }
+
     useEffect(() => {
         fetchData();
     }, [])
+
     const totalPages = Math.ceil(preserveData.length / PAGE_SIZE);
     const li_component = Array.from({ length: totalPages });
 
     async function fetchData() {
-        const fetchingData = await fetch("https://www.swiggy.com/dapi/restaurants/search/v3?lat=19.9728896&lng=73.8229516&str=Pizza&trackingId=undefined&submitAction=ENTER&queryUniqueId=5acbb6ca-c2eb-5c98-9027-846bb8b93dec&selectedPLTab=RESTAURANT");
+        const fetchingData = await fetch(
+            "https://namastedev.com/api/v1/listRestaurants"
+        );
         const data = await fetchingData.json();
-        // console.log("data", data.data.cards[0].groupedCard.cardGroupMap.RESTAURANT.cards.length);
-        const resturant = data.data.cards[0].groupedCard.cardGroupMap.RESTAURANT.cards;
-        setpreserveData(data.data.cards[0].groupedCard.cardGroupMap.RESTAURANT.cards);
-        const filterDataInit = [];
-        for (let i = 0; i <= PAGE_SIZE; i++) {
-            filterDataInit.push(resturant[i]);
-        }
-        setData(filterDataInit);
+
+        // ✅ ONLY THIS ACCESS IS UPDATED
+        console.log("this is the data", data)
+        const resturant =
+            data.data?.data?.cards?.[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants;
+
+        console.log("resturant data ", resturant);
+        setpreserveData(resturant);
+
+        // const filterDataInit = [];
+        // for (let i = 0; i <= PAGE_SIZE; i++) {
+        //     filterDataInit.push(resturant?.[i]);
+        // }
+        // console.log("this is the data ->>> ", filterDataInit)
+        setData(resturant);
         return data;
     }
 
 
     function fliteringOnClick(num) {
+        console.log(num,"this is the data")
         if (num == 0) {
             setData(preserveData);
         }
         // console.log("e.value is giving me this ", num);
         let filteredData = preserveData.filter(
             (restaurant) =>
-                restaurant?.card?.card?.info?.avgRating <= num
+                restaurant?.info?.avgRating <= num
         );
         // console.log("fil", filteredData.length)
         if (filteredData.length == 0) {
@@ -71,7 +92,7 @@ const Body = () => {
         let searchToLowerCase = searchText.toLowerCase();
         let matchedData = preserveData.filter(
             (pd) => {
-                return pd?.card?.card?.info?.name.toLowerCase().includes(searchToLowerCase);
+                return pd?.info?.name.toLowerCase().includes(searchToLowerCase);
             }
         );
         if (matchedData.length == 0) {
@@ -90,10 +111,9 @@ const Body = () => {
         let start = (pageNum * PAGE_SIZE) + (pageNum - 1);
         let end = start + PAGE_SIZE;
         let filterData = [];
-        for (let i = start; i <= end; i++) {
+        for (let i = start + 1; i < end; i++) {
             filterData.push(preserveData[i]);
         }
-        // console.log("most importent data",filterData);        
         setData(filterData);
     }
 
@@ -105,65 +125,96 @@ const Body = () => {
     }
 
     return data.length === 0 ? handleShimmer() : (
-        <div className="body">
-            <div className="filter">
-                {/* searchbox */}
-                <input className="search-box" id="search" type="text" name="" onChange={(e) => setSearchText(e.target.value)} />
-                <button className="search-btn" onClick={handleSearch}>
-                    Search The RESTRO 🔎
-                </button>
+        <div className="body justify-center">
+            <div className="filter justify-center flex-wrap flex">
+                <div className="m-5">
+                    <input
+                        className="search-box shadow-orange-400 shadow-lg m-2 border-4 border-orange-500 rounded-md"
+                        id="search"
+                        type="text"
+                        onChange={(e) => setSearchText(e.target.value)}
+                    />
+                    <button className="font-mono p-2 cursor-pointer bg-orange-200 rounded-lg hover:bg-amber-200" onClick={handleSearch}>
+                        Search The RESTRO 🔎
+                    </button>
+                </div>
+                <div className="m-5">
+                    <button className="p-2 bg-orange-300 border-orange-600 border-2 text-zinc-50 rounded-lg shadow-lg" onClick={handleReset}>
+                        reset Restro
+                    </button>
+                </div>
+                <div className="m-5">
+                    <label htmlFor="rating" className="p-2 h-full  border-orange-600 border-2 rounded-lg shadow-lg">
+                        choose the rating
+                    </label>
+                    <select
+                        id="rating"
+                        onChange={(e) => fliteringOnClick(Number(e.target.value))}
+                        className="ml-1  bg-orange-300 border-orange-600 border-2 text-zinc-50 rounded-lg shadow-lg" style={{ height: 41.5 }}
+                    >
+                        <option value="" className="font-mono">Select</option>
+                        <option value="1" className="font-mono">1+</option>
+                        <option value="4.3" className="font-mono">4.4</option>
+                        <option value="4.5" className="font-mono">4.5+</option>
+                    </select>
+                </div>
 
-                <button className="reset-btn" onClick={handleReset}>reset Restro</button>
-
-                <label htmlFor="rating">
-                    choose the rating
-                </label>
-                <select
-                    id="rating"
-                    onChange={(e) => fliteringOnClick(Number(e.target.value))}
-                >
-                    <option value="">Select</option>
-                    <option value="1">1+</option>
-                    <option value="2">2+</option>
-                    <option value="3">3+</option>
-                    <option value="4">4+</option>
-                </select>
             </div>
 
-            <div>
-                <h3>Page {currentPage}</h3>
+            <div className="flex justify-center my-4">
+                <h3 className="text-lg font-semibold">
+                    Page {currentPage}
+                </h3>
             </div>
-            {flag ?
-                <h1>No Data found sorry for that</h1> :
-                <div className="restro-container">
+
+
+
+            {flag ? (
+                <h1>No Data found sorry for that</h1>
+            ) : (
+                <div className="restro-container flex-wrap flex justify-center">
                     {
-                        data.map((restaurant, index) => {
-                            return (
-                                <RestroCard
-                                    resdata={restaurant?.card?.card}
-                                    key={restaurant?.card?.card?.info?.id ?? index}
-                                />
+                        data
+                            .filter((restaurant) =>
+                                restaurant?.info?.name !== "Spice Kingdom"
                             )
-                        })
-                    }
-                </div>}
+                            .map((restaurant, index) => {
+                                const id_extractor = restaurant?.info?.id;
 
-            {/* pagination */}
-            <div>
-                <ul className="pagination-box">
+                                return (
+                                    <Link
+                                        to={"/resturant/" + id_extractor}
+                                        key={restaurant?.info?.id ?? index}
+                                    >
+                                        <RestroCard resdata={restaurant} />
+                                    </Link>
+                                );
+                            })
+                    }
+                </div>
+            )}
+
+            {/* <div>
+                <ul className="pagination-box flex justify-center">
                     {
                         li_component.map((_, i) => {
-                            return <li className="li-pagination" key={i}>
-                                <button value={i} className="pagination-buttons" onClick={() => handlePagination(i)}>
-                                    {i}
-                                </button>
-                            </li>;
-
+                            return (
+                                <li className="li-pagination bg-orange-300 border-2 rounded-lg m-4 p-3 w-50 h-50" key={i}>
+                                    <button
+                                        value={i}
+                                        className="pagination-buttons"
+                                        onClick={() => handlePagination(i)}
+                                    >
+                                        {i}
+                                    </button>
+                                </li>
+                            );
                         })
                     }
                 </ul>
-            </div>
+            </div> */}
         </div>
     )
 }
+
 export default Body;
