@@ -1,66 +1,67 @@
 import { useEffect, useState } from "react";
 import { menuData } from "../data/menuData";
-
+import { useParams } from "react-router";
+import { MENU_API } from "../../constant";
+import ShimmerUi from "./shimmer";
+import { usefetchDataCustomHook } from "../utils/api";
 
 const RestroMenu = () => {
 
-    const [preserveData, setPreserveData] = useState([]);
 
-    useEffect(() => {
-        fetchData()
-    }, [])
-    async function fetchData() {
-        const data_res_raw = await fetch("https://www.zomato.com/webroutes/getPage?page_url=/nashik/pizza-hut-2-college-road/order?contextual_menu_params=eyJkaXNoX3NlYXJjaCI6eyJ0aXRsZSI6IkJlc3QgaW4gUGl6emEiLCJkaXNoX2lkcyI6WyI2ODk4NyJdLCJjdWlzaW5lX2lkcyI6W119fQ%3D%3D&location=&isMobile=0");
-        const data = await data_res_raw.json();
-        // console.log("thisi s the data",data);
-        setPreserveData(data.page_data.order.menuList.menus);
+    const { id } = useParams();
+    //custome hook
+    const { preserveData, res_tilte } = usefetchDataCustomHook(id);
+    //conditional rendring (jargaaannn ⚰️)
+    function handleShimmer() {
+        const shimmerCards = [];
+        for (let i = 0; i < 10; i++) {
+            shimmerCards.push(<ShimmerUi key={i} />);
+        }
+        // console.log("shimmer cards is like this", shimmerCards);
+        return (
+            <div className="loading restro-container">
+                {shimmerCards}
+            </div>
+        );
     }
 
 
-    console.log("this is the data", preserveData)
 
-
-    return (
-
-        <div className="restro-container">
-            <div className="restro-info">
-                <h1 className="restro name">name</h1>
-                <p className="address">trimurti chwo</p>
-                <p className="estimated-time">30 min</p>
-            </div>
-            {
-                preserveData.map((data) => {
-                    return (
-                        <div className="restro-menu-list" key={data.menu.id}>
-                            <h1>{data.menu.name}</h1>
-                            <div>
-                                {
-                                    data.menu.categories.map((cat) => {
-                                        return(
-                                        <div key={cat.category.id}>
-                                            {
-                                                cat.category.items.map((data_2) => {
-                                                    return (
-                                                        <div key={data_2.item.id}>
-                                                            <h5>{data_2.item.name}</h5>
-                                                            <p>{data_2.item.desc}</p>
-                                                        </div>
-                                                    );
-                                                })
-                                            }
-                                        </div>)
-                                    })
-                                }
+    return res_tilte.length === 0 ? handleShimmer() : (
+        <div className="restro-container flex justify-center">
+            <div>
+                <h2 className="text-center font-bold text-6xl text-orange-500">{res_tilte.name}</h2>
+                <p className="text-center">{res_tilte.costForTwo}</p>
+                <p className="text-center">{res_tilte.avgRating}</p>
+                <p className="text-center">{res_tilte.cuisines.join(",")}</p>
+                {
+                    preserveData.slice(1).map((data, index) => {
+                        return (
+                            <div className="restro-menu-list py-3" key={data?.card?.card?.title + "_" + index}>
+                                <div className="h-30 bg-orange-200">
+                                    <h1 className="font-bold text-center py-10">{data?.card?.card?.title}</h1>
+                                </div>
+                               
+                                <div className="">
+                                    {
+                                        data?.card?.card?.itemCards?.map((cat) => {
+                                            return (
+                                                <div key={cat?.card?.info?.id} className="bg-orange-100">
+                                                    <h5 className="px-2">{cat?.card?.info?.name} - {cat?.card?.info.price / 100} rs</h5>
+                                                    <p className="px-2">{cat?.card?.info?.description}</p>
+                                                </div>
+                                            );
+                                        })
+                                    }
+                                </div>
                             </div>
-                        </div>
-                    )
-                })
-            }
+                        )
+                    })
+                }
+
+            </div>
         </div>
-
-
     )
 }
+
 export default RestroMenu;
-
-
