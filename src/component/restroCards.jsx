@@ -27,4 +27,16 @@ const RestroCard = ({ resdata }) => {
     )
 }
 
+export const RestroCardPromoted = (RestroCard_HOF) => {
+
+    return (res_data) =>{
+        return(
+            <div>
+             <label className="absolute bg-black text-white mt-3 ">This is Veg</label>
+            <RestroCard_HOF {...res_data}/>
+            </div>
+        );
+    }
+}
+
 export default RestroCard;

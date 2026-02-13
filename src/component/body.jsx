@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { resdata } from "../data/resData";
-import RestroCard from "./restroCards";
+import RestroCard, { RestroCardPromoted } from "./restroCards";
 import ShimmerUi from "./shimmer";
 import { Link } from "react-router-dom";
 import useOnlineStatus from "../utils/useOnlineStatus";
@@ -16,6 +16,8 @@ const Body = () => {
     const [searchText, setSearchText] = useState("");
     const [currentPage, setCurrentPage] = useState(0);
 
+
+    const Example_hof  = RestroCardPromoted(RestroCard);
 
     if (!status) {
         return (
@@ -37,11 +39,11 @@ const Body = () => {
         const data = await fetchingData.json();
 
         // ✅ ONLY THIS ACCESS IS UPDATED
-        console.log("this is the data", data)
+        // console.log("this is the data", data)
         const resturant =
             data.data?.data?.cards?.[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants;
 
-        console.log("resturant data ", resturant);
+        // console.log("resturant data ", resturant);
         setpreserveData(resturant);
 
         // const filterDataInit = [];
@@ -158,17 +160,12 @@ const Body = () => {
                         <option value="4.5" className="font-mono">4.5+</option>
                     </select>
                 </div>
-
             </div>
-
             <div className="flex justify-center my-4">
                 <h3 className="text-lg font-semibold">
                     Page {currentPage}
                 </h3>
             </div>
-
-
-
             {flag ? (
                 <h1>No Data found sorry for that</h1>
             ) : (
@@ -186,7 +183,7 @@ const Body = () => {
                                         to={"/resturant/" + id_extractor}
                                         key={restaurant?.info?.id ?? index}
                                     >
-                                        <RestroCard resdata={restaurant} />
+                                        {restaurant?.info?.veg ?  <Example_hof resdata={restaurant} /> : <RestroCard resdata={restaurant}/>  }
                                     </Link>
                                 );
                             })
