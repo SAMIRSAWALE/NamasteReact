@@ -182,13 +182,13 @@ const Body = () => {
                                         to={"/resturant/" + id_extractor}
                                         key={restaurant?.info?.id ?? index}
                                     >
+                                        {restaurant?.info?.veg ?  <Example_hof resdata={restaurant} /> : <RestroCard resdata={restaurant}/>  }
                                     </Link>
                                 );
                             })
                     }
                 </div>
             )}
-
             {/* <div>
                 <ul className="pagination-box flex justify-center">
                     {
