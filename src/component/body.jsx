@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { resdata } from "../data/resData";
 import RestroCard, { RestroCardPromoted } from "./restroCards";
 import ShimmerUi from "./shimmer";
 import { Link } from "react-router-dom";
@@ -183,7 +182,6 @@ const Body = () => {
                                         to={"/resturant/" + id_extractor}
                                         key={restaurant?.info?.id ?? index}
                                     >
-                                        {restaurant?.info?.veg ?  <Example_hof resdata={restaurant} /> : <RestroCard resdata={restaurant}/>  }
                                     </Link>
                                 );
                             })
