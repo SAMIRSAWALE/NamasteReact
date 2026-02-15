@@ -1,23 +1,24 @@
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 const Navbar = () => {
     const [btnName , setbtnName] = useState("login");
-    console.log("Component Rerender's");
+    // console.log("Component Rerender's");
 
-    //types of use effect working
-        //  with out dependecny array
-        // with dependency arrya
+    const cartItems = useSelector((store) => {return(store.cart.items)});
+    // console.log("coming form the redux store",cartItems)
+
         useEffect(() => {
-                console.log(
-                    "use effect is loaded "
-                );
+                // console.log(
+                //     "use effect is loaded "
+                // );
         })
         // empty dependency arrya
         useEffect(() => {
-                console.log(
-                    "use effect is loaded "
-                );
+                // console.log(
+                //     "use effect is loaded "
+                // );
         })
         
 
@@ -47,7 +48,7 @@ const Navbar = () => {
                        <Link to={"/about"}>about us</Link>
                     </li> 
                     <li className="m-4">
-                        cart
+                        <Link to={"/cart"}>cart - {cartItems.length}</Link>
                     </li>
                     <li className="m-4" onClick={handlelogin}>
                         {btnName}

@@ -8,12 +8,18 @@ import About from "./component/about";
 import ContactUs from "./component/contactus";
 import ErrorPage from "./component/errorpage";
 import RestroMenu from "./component/restroMenu";
+import { Provider } from "react-redux";
+import appStore from "./utils/appStore";
+import Cart from "./component/cart";
 
 const AppLayout = () => {
     return (
         <div>
-            <Navbar />
-            <Outlet />
+            <Provider store={appStore}>
+                <Navbar />
+                <Outlet />
+            </Provider>
+
         </div>
     )
 };
@@ -38,6 +44,10 @@ const routing = createBrowserRouter([
             {
                 path: "/resturant/:id",
                 element: <RestroMenu />
+            },
+            {
+                path: "/cart",
+                element: <Cart />
             }
         ]
     },
