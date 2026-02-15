@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { resdata } from "../data/resData";
 import RestroCard, { RestroCardPromoted } from "./restroCards";
 import ShimmerUi from "./shimmer";
 import { Link } from "react-router-dom";
