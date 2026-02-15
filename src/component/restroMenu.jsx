@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
-
 import { useParams } from "react-router";
-
 import ShimmerUi from "./shimmer";
 import { usefetchDataCustomHook } from "../utils/api";
 import RestCatTitle from "./resCatTitle";
