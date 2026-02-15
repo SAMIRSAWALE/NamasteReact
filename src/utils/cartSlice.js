@@ -21,13 +21,28 @@ const cartSlice = createSlice({
         },
         removeItem : (state , action) =>
         {
-            (action.payload);
             state.items = state.items.filter((index) => {
                 return(index.name !==action.payload);
             })
-        }
+        },
+        incrementCount : (state , action) =>
+        { 
+            let IncCount = state.items.find(item => item.name === action.payload.name) 
+            if(IncCount)
+            {
+                IncCount.count+=1;
+            }
+        },
+        decrementCount : (state , action) =>
+        { 
+            let IncCount = state.items.find(item => item.name === action.payload.name) 
+            if(IncCount)
+            {
+                IncCount.count-=1;
+            }
+        },
     }
 }); 
 
-export const {addItem , removeItem } = cartSlice.actions; 
+export const {addItem , removeItem ,incrementCount ,decrementCount} = cartSlice.actions; 
 export default cartSlice.reducer;
