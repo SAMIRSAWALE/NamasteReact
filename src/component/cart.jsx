@@ -1,15 +1,27 @@
 import { useDispatch, useSelector } from "react-redux";
-import { removeItem } from "../utils/cartSlice";
+import { decrementCount, incrementCount, removeItem } from "../utils/cartSlice";
 import Total from "./item_total";
 
 const Cart = () => {
     const cart_items = useSelector((store) => store.cart.items);
-    console.log("cart item",cart_items)
+    console.log("cart item", cart_items)
 
     const dispatch = useDispatch();
+    //remove the item
     function handleRemove(name) {
         dispatch(removeItem(name));
     }
+
+    // increment the count
+    function handleIncrementCount(name) {
+        dispatch(incrementCount({name}));
+    }
+     function handleDecrementCount(name) {
+        dispatch(decrementCount({name}));
+    }
+
+
+
 
     const count = 1;
     if (!cart_items.length) {
@@ -48,6 +60,13 @@ const Cart = () => {
                                     <button onClick={() => { handleRemove(item.name) }} className="px-3 py-1 text-sm bg-indigo-50 text-indigo-600 rounded-lg hover:bg-indigo-100 transition">
                                         Remove
                                     </button>
+                                    <button onClick={() => { handleIncrementCount(item.name) }}>
+                                        ➕
+                                    </button>
+                                    <button onClick={() => { handleDecrementCount(item.name) }}>
+                                        ➖
+                                    </button>
+
                                     <h5>
                                         x {item.count}
                                     </h5>
