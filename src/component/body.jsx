@@ -57,7 +57,7 @@ const Body = () => {
 
 
     function fliteringOnClick(num) {
-        console.log(num,"this is the data")
+        // console.log(num,"this is the data")
         if (num == 0) {
             setData(preserveData);
         }

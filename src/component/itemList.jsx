@@ -1,12 +1,21 @@
+import { useDispatch, useSelector } from "react-redux";
+import { addItem } from "../utils/cartSlice";
+
 const Item_list = ({ item_Cards }) => {
     // console.log("the image data", item_Cards);
+    const dispatch = useDispatch();
+    const cartItems = useSelector((store) => { return (store.cart.items) });
+
+    function handleAddtoCart(name, discription, image, price) {
+        dispatch(addItem({ name, discription, image, price}));
+    }
 
     return (
         <div className="text-center">
             {
                 item_Cards.map((item) => {
                     const image_url = `https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_660/${item.card.info.imageId}`
-                    console.log("this is it the care image ids", image_url);
+                    // console.log("this is it the care image ids", image_url);
                     return (
                         <div key={item.card.info.id} className="text-left bg-white rounded-lg border-2 shadow-lg py-2 my-2 flex justify-between">
                             <div>
@@ -21,7 +30,7 @@ const Item_list = ({ item_Cards }) => {
                                     alt={item.card.info.name}
                                 />
 
-                                <button className="absolute -bottom-2 left-1/2 -translate-x-1/2 bg-white rounded-lg shadow-md font-bold text-orange-400">
+                                <button onClick={() => { handleAddtoCart(item.card.info.name, item.card.info.description, image_url, item.card.info.price / 100) }} className="absolute -bottom-2 left-1/2 -translate-x-1/2 bg-white rounded-lg shadow-md font-bold text-orange-400">
                                     + Add
                                 </button>
                             </div>
