@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { menuData } from "../data/menuData";
+
 import { useParams } from "react-router";
-import { MENU_API } from "../../constant";
+
 import ShimmerUi from "./shimmer";
 import { usefetchDataCustomHook } from "../utils/api";
 import RestCatTitle from "./resCatTitle";
